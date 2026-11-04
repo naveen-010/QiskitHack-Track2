@@ -1,0 +1,86 @@
+{
+  "branch": "combined-solver",
+  "source_sha256": "5d3635eb8439b62a07ef19d70eb1922976ee451e50f1b549570dc94d15c81e85",
+  "standalone_files": [
+    "my_solver.py",
+    "submission/my_solver.py"
+  ],
+  "original_commits": {
+    "naveen": "82e17e1be64df3d24956e60bc756f09f3f4da428",
+    "pulkit": "a067e0ad3eec13904e92e784e5ff61580b4fdaa7"
+  },
+  "original_comparison": {
+    "naveen": {
+      "runs": 184,
+      "correct": 177,
+      "mean_queries": 37215.07065217391,
+      "mean_score": 1.230509714673913,
+      "max_queries": 73829,
+      "max_seconds": 6.528
+    },
+    "pulkit": {
+      "runs": 184,
+      "correct": 183,
+      "mean_queries": 23166.739130434784,
+      "mean_score": 1.3514018002717392,
+      "max_queries": 79949,
+      "max_seconds": 5.594
+    }
+  },
+  "combined_comparison": {
+    "runs": 184,
+    "correct": 184,
+    "mean_queries": 20235.706521739132,
+    "mean_score": 1.3735268342391305,
+    "max_queries": 65245,
+    "max_seconds": 5.091
+  },
+  "fresh_seeds": {
+    "runs": 328,
+    "correct": 328,
+    "mean_queries": 19548.134146341465,
+    "mean_score": 1.377824161585366,
+    "max_queries": 67400,
+    "max_seconds": 7.206
+  },
+  "regression_21_shapes_40_seeds": {
+    "runs": 840,
+    "correct": 840,
+    "mean_queries": 19489.376190476192,
+    "mean_score": 1.3781913988095238,
+    "max_queries": 71094,
+    "max_seconds": 8.991
+  },
+  "official_checker": {
+    "runs": 40,
+    "correct": 40,
+    "mean_queries": 25394.55,
+    "mean_score": 1.3412840625,
+    "max_queries": 70585,
+    "max_seconds": 6.2
+  },
+  "unit_tests_passed": 118,
+  "total_solver_runs": 1392,
+  "total_correct": 1392,
+  "max_queries": 71094,
+  "max_seconds": 8.991,
+  "imports": [
+    "import math",
+    "import random",
+    "import time",
+    "from fractions import Fraction",
+    "from qiskit import QuantumCircuit",
+    "from silentgroup import oracle_gate"
+  ],
+  "oracle_methods": [
+    "run",
+    "cost",
+    "budget_left"
+  ],
+  "qubits": 1,
+  "limitations": [
+    "Finite-shot statistical checks and phase reconstruction are probabilistic.",
+    "The selected test cases do not represent the unknown hidden-instance distribution.",
+    "Full subgroup structure may remain unresolved even when the key or forgery is established."
+  ]
+}

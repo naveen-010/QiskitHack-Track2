@@ -1,0 +1,3 @@
+# Keep both standalone submission copies and their frozen hashes identical on every OS.
+/my_solver.py text eol=lf
+/submission/my_solver.py text eol=lf

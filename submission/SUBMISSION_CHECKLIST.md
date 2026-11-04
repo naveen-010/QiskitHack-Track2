@@ -1,47 +1,50 @@
-# Submission checklist — `submission/my_solver.py`
+# Combined submission checklist
 
-* Date: 2026-11-04
-* Frozen file sha256: `2b0b1b4da9104cf93f822b84e79ba38970fb3b7a7ad015d6deba45036917ba8f`
-  (`results/frozen_sha256.txt`; re-check with `sha256sum submission/my_solver.py`)
-* Repo: `ProAltro/qff-hackathon` @ `89265613ec267045e5f36be745fb2fd4d029dd10` (unmodified `silentgroup/`)
-* Environment (`results/environment.txt`): Windows 11, Python 3.14.6, qiskit 2.6.1, numpy 2.5.4
-  (+ pytest 9.2.0, matplotlib 3.11.2, scipy 1.18.1 for tests/plots only — not used by the solver)
+Current branch: `combined-solver` (based on Pulkit, with Naveen's order/log ideas).
 
-## Compliance audit (frozen file)
-| Rule | Status | How checked |
-|---|---|---|
-| `solve(oracle) -> {"order": int, "secret": int or "none"}` | ✅ | `answer()` builds the dict; tests assert types |
-| Imports only stdlib / qiskit / silentgroup | ✅ | `grep -n import` → `math, random, time, fractions, qiskit.QuantumCircuit, silentgroup.oracle_gate` (numpy not needed) |
-| Oracle used only via `run`, `cost`, `budget_left` | ✅ | `grep -n "oracle\." submission/my_solver.py` |
-| No instance files / answers / `_instance` / MockGroup internals | ✅ | `grep -n "_instance\|instances\|answer\[" ` → none; the only file I/O-free code |
-| No prints, no file access | ✅ | `grep -n "print(\|open("` → none |
-| ≤ 16 qubits, no loops in circuits, parameters bound | ✅ | every circuit is `QuantumCircuit(1, …)`; Python unrolls; all angles are floats |
-| Budget ≤ 80,000 | ✅ | `_Ctx.run` refuses runs that exceed `budget_left()`; max observed 76,413 (checker), 70,055 (regression) |
-| Time < 600 s | ✅ | 400 s monotonic guard; max observed 3.5 s (checker), 10.2 s (regression) |
-| `"none"` only with verified lattice | ✅ | `answer(H, trusted)`; trusted only after `verify_generators` + `complete`; 0 false forgeries in 840 regression runs |
+Submit **`submission/my_solver.py`**. The root **`my_solver.py`** is byte-identical.
+Both are standalone files defining `solve(oracle) -> dict`.
 
-## Commands run and outputs
+SHA256 (both files): `5d3635eb8439b62a07ef19d70eb1922976ee451e50f1b549570dc94d15c81e85`.
+The two files use LF endings, enforced by `.gitattributes`.
+`results/combined_sha256.txt` records their checksums.
+
+## Validation on the final file
+
+| Check | Result |
+|---|---:|
+| Unit tests and reproduced failure regressions | 118 passed |
+| Same seeded comparison used for both original branches | 184/184 correct |
+| Independent-seed comparison | 328/328 correct |
+| Original 21-shape, 40-seed regression | 840/840 correct |
+| Official unseeded public checker, 20 repeats per instance | 40/40 correct |
+| Total solver runs | 1,392/1,392 correct |
+| Maximum observed queries | 71,094 / 80,000 |
+| Maximum observed wall time | 8.991 s / 600 s |
+
+Environment: Python 3.14.6, Qiskit 2.6.1, NumPy 2.5.4; Windows.
+
+The solver uses one recycled qubit. Runtime imports are only `math`, `random`,
+`time`, `fractions`, `qiskit.QuantumCircuit`, and `silentgroup.oracle_gate`.
+Device interaction uses only `run`, `cost`, and `budget_left`; no instance access,
+file access, networking, nonstandard dependencies, or output printing.
+
+Finite-shot checks and phase reconstruction remain probabilistic. The selected
+suite is not the unknown hidden-instance distribution. On total exhaustion the
+required interface receives a best-effort integer guess, not a claimed forgery.
+
+## Reproduce
+
+```powershell
+.\.venv\Scripts\python.exe -m silentgroup.check submission/my_solver.py --repeat 20
+.\.venv\Scripts\python.exe -m pytest tests -q
+.\.venv\Scripts\python.exe engineering/benchmark_combined.py --tag combined_final
+.\.venv\Scripts\python.exe engineering/benchmark_combined.py --tag combined_final_fresh --seed0 8 --seeds 16 --public-repeats 20 --offset 20000
+.\.venv\Scripts\python.exe engineering/regress.py --seeds 40 --tag combined_final_stress --workers 4
 ```
-python -m venv .venv && source .venv/Scripts/activate
-pip install -e . && pip install numpy qiskit pytest matplotlib scipy
-python -m silentgroup.check my_solver.py --repeat 5                 # baseline -> results/baseline.txt (10/10)
-python -m pytest tests -q                                           # 96 passed
-python engineering/regress.py --seeds 40 --tag final_40seeds        # results/regress_final_40seeds.txt
-python -m silentgroup.check submission/my_solver.py --repeat 20     # results/final_checker.txt
-```
 
-### Final checker (`results/final_checker.txt`, frozen file, 20 repeats each)
-| instance | correct | mean queries | max queries | mean pts | max time |
-|---|---|---|---|---|---|
-| public_1 | 20/20 | 17,025 | 19,516 | 1.393 | 3.5 s |
-| public_2 | 20/20 | 40,161 | 76,413 | 1.249 | 3.5 s |
-
-### Final regression (`results/regress_final_40seeds.txt`, 40 seeds × 21 shapes, noise 0.002)
-840/840 fully correct; every shape 40/40, Wilson 95 % lower bound 0.912 ≥ 0.90; 0 false forgeries,
-0 missed forgeries, 0 exceptions; max 70,055 queries; max 10.2 s.
-
-## Re-check command
-```
-python -m silentgroup.check submission/my_solver.py --repeat 20
-python engineering/regress.py --seeds 40 --tag recheck
-```
+See `COMBINED_SOLVER.md` for the derivations, optimizations, and limitations.
+See `results/combined_validation.json` for machine-readable measurements and
+original branch provenance. `REPORT_NOTES.md`, `results/final_checker.txt`, and
+`results/frozen_sha256.txt` are historical Pulkit-version artifacts, not validation
+of this combined implementation.

@@ -365,18 +365,36 @@ def e4_task(args):
     shape, seed = args
     inst = MockGroup(E4_SHAPES[shape], seed=seed, forged=E4_FORGED.get(shape, ""))
     captured = {}
-    orig = S.answer
+    orig = S._Ctx
 
-    def spy(H, trusted):                               # capture the verified lattice (dev only)
-        captured["H"] = H
-        return orig(H, trusted)
-    S.answer = spy
+    def spy(oracle):                                   # capture public solver bookkeeping (dev only)
+        ctx = orig(oracle)
+        captured["ctx"] = ctx
+        return ctx
+    S._Ctx = spy
     try:
         res = S.solve(Oracle(inst, budget=80_000, seed=50_000 + seed))
     finally:
-        S.answer = orig
+        S._Ctx = orig
+    ctx = captured["ctx"]
+    H = None
+    if ctx.order is not None and len(ctx.logs) == 3:
+        # Verified logs and a minimal order explicitly give the full cyclic kernel.
+        H = S.hnf([[1 if j == i else 0 for j in range(3)] + [-ctx.logs[i]] for i in range(3)]
+                  + [[0, 0, 0, ctx.order]])
+    elif ctx.best is not None:
+        try:
+            # The optimized solver may prove a forgery without full saturation.
+            # An extension claiming the complete structure must still finish it.
+            for _ in range(4):
+                before = ctx.spent
+                H = S.complete(ctx, ctx.best)
+                if H is not None or ctx.spent == before or ctx.left() <= S.RETRY_RESERVE:
+                    break
+        except (S._Exhausted, S._AttemptExhausted):
+            pass                                      # honestly record unresolved structure below
     truth = group_structure(true_hnf(inst))
-    got = group_structure(captured["H"]) if "H" in captured else None
+    got = group_structure(H) if H is not None else None
     G = inst.group
     exponent = math.lcm(*(G.element_order(inst.elements[e]) for e in S.ELS))   # independent check
     return {"shape": shape, "seed": seed, "solve_ok": int(res == inst.answer), "structure_true": truth,
@@ -387,7 +405,7 @@ def run_e4():
     tasks = [(sh, s) for sh in E4_SHAPES for s in range(10)]
     with mp.Pool(WORKERS) as pool:
         rows = pool.map(e4_task, tasks)
-    write_csv("e4_structure.csv", rows)
+    write_csv("e4_structure_combined.csv", rows)
     for sh in E4_SHAPES:
         rs = [r for r in rows if r["shape"] == sh]
         print(f"{sh:14s} structure match {sum(r['match'] for r in rs)}/{len(rs)}  exponent check "

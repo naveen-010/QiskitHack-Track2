@@ -1,5 +1,20 @@
 # The Silent Group
 
+The current solution is the **combined solver** on branch `combined-solver`.
+`my_solver.py` and `submission/my_solver.py` are identical standalone submission files.
+It combines Pulkit's relation-lattice reconstruction with Naveen's order minimization
+and adaptive discrete-log recovery, plus verified non-cyclic forgery witnesses.
+
+```powershell
+.\.venv\Scripts\python.exe -m silentgroup.check submission/my_solver.py --repeat 20
+.\.venv\Scripts\python.exe -m pytest tests -q
+```
+
+See [COMBINED_SOLVER.md](COMBINED_SOLVER.md) for the algorithm, correctness arguments,
+limitations, measured comparisons, and reproduction commands. Earlier results and
+`REPORT_NOTES.md` describe the original Pulkit baseline/final versions, unless a
+filename explicitly contains `combined`.
+
 *Break a three-party Diffie–Hellman exchange in a group you can never look at.*
 
 ## The story

@@ -1,0 +1,212 @@
+{
+  "solver": "C:\\Users\\pulki\\Downloads\\Qiskit\\qff-hackathon\\submission\\my_solver.py",
+  "solver_sha256": "5d3635eb8439b62a07ef19d70eb1922976ee451e50f1b549570dc94d15c81e85",
+  "offset": 10000,
+  "seed0": 0,
+  "runs": 184,
+  "correct": 184,
+  "mean_queries": 20235.706521739132,
+  "mean_score": 1.3735268342391305,
+  "cases": [
+    {
+      "case": "public_1",
+      "runs": 20,
+      "correct": 20,
+      "correct_order": 20,
+      "mean_queries": 19573,
+      "max_queries": 24251,
+      "mean_score": 1.377667,
+      "max_seconds": 1.658
+    },
+    {
+      "case": "public_2",
+      "runs": 20,
+      "correct": 20,
+      "correct_order": 20,
+      "mean_queries": 32360,
+      "max_queries": 65245,
+      "mean_score": 1.297748,
+      "max_seconds": 5.091
+    },
+    {
+      "case": "prime_56",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 18298,
+      "max_queries": 20593,
+      "mean_score": 1.385641,
+      "max_seconds": 1.129
+    },
+    {
+      "case": "pow2_59",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 20098,
+      "max_queries": 21893,
+      "mean_score": 1.37439,
+      "max_seconds": 1.297
+    },
+    {
+      "case": "prime_product",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 18838,
+      "max_queries": 19350,
+      "mean_score": 1.382265,
+      "max_seconds": 1.054
+    },
+    {
+      "case": "smooth",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 17046,
+      "max_queries": 27785,
+      "mean_score": 1.393462,
+      "max_seconds": 1.665
+    },
+    {
+      "case": "g_small",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 11752,
+      "max_queries": 25797,
+      "mean_score": 1.426552,
+      "max_seconds": 1.396
+    },
+    {
+      "case": "tiny_7",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 3320,
+      "max_queries": 12140,
+      "mean_score": 1.479253,
+      "max_seconds": 0.861
+    },
+    {
+      "case": "tiny_1000003",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 6235,
+      "max_queries": 7712,
+      "mean_score": 1.461031,
+      "max_seconds": 0.713
+    },
+    {
+      "case": "forged_B",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 20406,
+      "max_queries": 25831,
+      "mean_score": 1.372462,
+      "max_seconds": 1.448
+    },
+    {
+      "case": "forged_AB",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 25511,
+      "max_queries": 28278,
+      "mean_score": 1.340559,
+      "max_seconds": 1.588
+    },
+    {
+      "case": "forged_ABC",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 25828,
+      "max_queries": 29471,
+      "mean_score": 1.338577,
+      "max_seconds": 1.361
+    },
+    {
+      "case": "skew_small_logs",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 35409,
+      "max_queries": 35553,
+      "mean_score": 1.278691,
+      "max_seconds": 1.654
+    },
+    {
+      "case": "skew_equal_logs",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 35710,
+      "max_queries": 37850,
+      "mean_score": 1.276812,
+      "max_seconds": 1.667
+    },
+    {
+      "case": "identity_g_honest",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 100,
+      "max_queries": 100,
+      "mean_score": 1.499375,
+      "max_seconds": 0.012
+    },
+    {
+      "case": "identity_g_forged",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 50,
+      "max_queries": 52,
+      "mean_score": 1.499684,
+      "max_seconds": 0.007
+    },
+    {
+      "case": "zero_A",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 26079,
+      "max_queries": 49571,
+      "mean_score": 1.337009,
+      "max_seconds": 3.038
+    },
+    {
+      "case": "exact_2pow60",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 19654,
+      "max_queries": 21845,
+      "mean_score": 1.377161,
+      "max_seconds": 1.17
+    },
+    {
+      "case": "prime_rank4_forgery",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 11239,
+      "max_queries": 24612,
+      "mean_score": 1.429758,
+      "max_seconds": 2.214
+    },
+    {
+      "case": "two_long_directions",
+      "runs": 8,
+      "correct": 8,
+      "correct_order": 8,
+      "mean_queries": 40016,
+      "max_queries": 42505,
+      "mean_score": 1.249898,
+      "max_seconds": 4.111
+    }
+  ]
+}

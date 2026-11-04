@@ -1,3 +1,5 @@
+> Historical notes for Pulkit commit a067e0a. For the current combined solver, see COMBINED_SOLVER.md and submission/SUBMISSION_CHECKLIST.md.
+
 # REPORT_NOTES — The Silent Group (QFF 2026, Track 2)
 
 Material for the 6-page report and the 8-minute talk. Written so that a team member who did not write
