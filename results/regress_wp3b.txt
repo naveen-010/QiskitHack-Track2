@@ -1,0 +1,26 @@
+solver=C:\Users\pulki\Downloads\Qiskit\qff-hackathon\submission\my_solver.py seeds=0..19 noise=0.002
+shape                    n  ok      wilson95 ordOK falseF missF exc    medQ    maxQ   maxT
+cyclic_2^58             20  20 [0.839,1.000]    20      0     0   0   14816   20048    2.4 FAIL
+p1e9_x_p1e9             20  20 [0.839,1.000]    20      0     0   0   15152   17846    1.9 FAIL
+2^20x6x3^8              20  20 [0.839,1.000]    20      0     0   0   12864   18270    1.8 FAIL
+cyclic_2^55             20  20 [0.839,1.000]    20      0     0   0   14540   23906    1.9 FAIL
+2^29_sq                 20  20 [0.839,1.000]    20      0     0   0   12582   35552    2.1 FAIL
+tiny_1000003            20  20 [0.839,1.000]    20      0     0   0   11852   19006    1.5 FAIL
+2^30x3^18               20  20 [0.839,1.000]    20      0     0   0   14955   33532    6.1 FAIL
+tiny_7                  20  20 [0.839,1.000]    20      0     0   0   10875   15072    1.5 FAIL
+tiny_64                 20  20 [0.839,1.000]    20      0     0   0   11010   20400    1.6 FAIL
+tiny_1001               20  20 [0.839,1.000]    20      0     0   0   11284   18170    1.8 FAIL
+tiny_65537              20  20 [0.839,1.000]    20      0     0   0   11611   17908    1.3 FAIL
+forged1_C               20  19 [0.764,0.991]    20      0     1   0   23127   73890   27.8 FAIL
+forged2_AB              20  20 [0.839,1.000]    20      0     0   0   22775   30658   16.0 FAIL
+forged3_ABC             20  20 [0.839,1.000]    20      0     0   0   21113   28802   19.1 FAIL
+forged_small_12x6       20  20 [0.839,1.000]    20      0     0   0   16305   27002    2.5 FAIL
+public1_shape           20  20 [0.839,1.000]    20      0     0   0   15540   20684    3.9 FAIL
+public2_shape           20  20 [0.839,1.000]    20      0     0   0   13713   35028    2.3 FAIL
+public2_shape_forgA     20  18 [0.699,0.972]    20      0     2   0   34744   69474   23.7 FAIL
+skew_2^55_a2b3c5        20  20 [0.839,1.000]    20      0     0   0   33441   45836    3.1 FAIL
+skew_2^58_a1b1c1        20  20 [0.839,1.000]    20      0     0   0   31629   48808    3.2 FAIL
+skew_p1e9sq_small       20  20 [0.839,1.000]    20      0     0   0   36612   71022    6.2 FAIL
+FAIL forged1_C seed=17 got={'order': 1415577600, 'secret': 0} want={'order': 1415577600, 'secret': 'none'} q=68502 err=
+FAIL public2_shape_forgA seed=6 got={'order': 273273, 'secret': 0} want={'order': 273273, 'secret': 'none'} q=69474 err=
+FAIL public2_shape_forgA seed=11 got={'order': 2125673550, 'secret': 0} want={'order': 2125673550, 'secret': 'none'} q=68310 err=

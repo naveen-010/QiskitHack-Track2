@@ -1,0 +1,10 @@
+public_1: 1.413 pts  queries=13984  0.9s  correct
+public_1: 1.413 pts  queries=13984  0.9s  correct
+public_1: 1.413 pts  queries=13952  0.9s  correct
+public_1: 1.412 pts  queries=14032  1.0s  correct
+public_1: 1.412 pts  queries=14032  0.9s  correct
+public_2: 1.372 pts  queries=20416  1.2s  correct
+public_2: 1.408 pts  queries=14712  0.8s  correct
+public_2: 1.268 pts  queries=37064  2.3s  correct
+public_2: 1.408 pts  queries=14760  0.9s  correct
+public_2: 1.376 pts  queries=19840  1.2s  correct

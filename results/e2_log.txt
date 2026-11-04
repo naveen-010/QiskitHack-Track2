@@ -1,0 +1,17 @@
+cyclic_2^58    nu=0.002  ok=20/20 [0.84,1.00] medQ=16098 false_none=0 maxT=2.28
+cyclic_2^58    nu=0.004  ok=20/20 [0.84,1.00] medQ=18470 false_none=0 maxT=5.77
+cyclic_2^58    nu=0.008  ok=5/20 [0.11,0.47] medQ=66864 false_none=0 maxT=25.78
+cyclic_2^58    nu=0.02   ok=0/20 [0.00,0.16] medQ=66864 false_none=0 maxT=26.28
+cyclic_2^58    nu=0.05   ok=0/20 [0.00,0.16] medQ=66864 false_none=0 maxT=25.42
+public1_shape  nu=0.002  ok=20/20 [0.84,1.00] medQ=17274 false_none=0 maxT=3.69
+public1_shape  nu=0.004  ok=20/20 [0.84,1.00] medQ=17290 false_none=0 maxT=11.42
+public1_shape  nu=0.008  ok=9/20 [0.26,0.66] medQ=66864 false_none=0 maxT=24.97
+public1_shape  nu=0.02   ok=0/20 [0.00,0.16] medQ=66864 false_none=0 maxT=26.24
+public1_shape  nu=0.05   ok=0/20 [0.00,0.16] medQ=66864 false_none=0 maxT=27.41
+nu=0.002: corrupted-shot rate 0.0333 [0.0182,0.0603]
+nu=0.004: corrupted-shot rate 0.14 [0.1053,0.1838]
+nu=0.008: corrupted-shot rate 0.4633 [0.4077,0.5199]
+nu=0.02: corrupted-shot rate 0.9767 [0.9526,0.9887]
+nu=0.05: corrupted-shot rate 1.0 [0.9874,1.0]
+log-log slope of corrupted-shot rate vs noise = 1.90 (hypothesis: 2)
+[e2 done in 248s]

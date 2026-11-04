@@ -1,0 +1,109 @@
+solver=my_solver.py seeds=0..19 noise=0.002
+shape                    n  ok      wilson95 ordOK falseF missF exc    medQ    maxQ   maxT
+cyclic_2^58             20  20 [0.839,1.000]    20      0     0   0   14120   28360   11.2 FAIL
+p1e9_x_p1e9             20  20 [0.839,1.000]    20      0     0   0   14224   20248    1.6 FAIL
+2^20x6x3^8              20  20 [0.839,1.000]    20      0     0   0   13252   16576    1.4 FAIL
+cyclic_2^55             20  20 [0.839,1.000]    20      0     0   0   14699   21126    1.7 FAIL
+2^29_sq                 20  19 [0.764,0.991]    20      1     0   0   12663   31238    2.3 FAIL
+tiny_1000003            20  17 [0.640,0.948]    19      3     0   0   11704   36704    2.7 FAIL
+2^30x3^18               20  20 [0.839,1.000]    20      0     0   0   15685   24366    2.3 FAIL
+tiny_7                  20  16 [0.584,0.919]    19      3     0   0   10886   75294    5.6 FAIL
+tiny_64                 20  18 [0.699,0.972]    20      2     0   0   11037   16374    1.6 FAIL
+tiny_1001               20  16 [0.584,0.919]    20      4     0   0   11312   12128    1.3 FAIL
+tiny_65537              20  18 [0.699,0.972]    20      2     0   0   11504   12176    1.3 FAIL
+forged1_C               20  17 [0.640,0.948]    17      0     2   0   18835   75160 1386.1 FAIL
+forged2_AB              20  20 [0.839,1.000]    20      0     0   0   15046   36174    2.8 FAIL
+forged3_ABC             20  20 [0.839,1.000]    20      0     0   0   14932   34680    3.0 FAIL
+forged_small_12x6       20  20 [0.839,1.000]    20      0     0   0   10988   19188    1.7 FAIL
+public1_shape           20  20 [0.839,1.000]    20      0     0   0   14888   21024    2.1 FAIL
+public2_shape           20  17 [0.640,0.948]    20      3     0   0   14435   20112    1.8 FAIL
+public2_shape_forgA     20  16 [0.584,0.919]    16      0     3   1   20159   35788    inf FAIL
+skew_2^55_a2b3c5        20   0 [0.000,0.161]     0      5     0   9   12568   75312    inf FAIL
+skew_2^58_a1b1c1        20   0 [0.000,0.161]     0      0     0  18      -1   27070    inf FAIL
+skew_p1e9sq_small       20   0 [0.000,0.161]     0      0     0  20      -1      -1    inf FAIL
+FAIL 2^29_sq seed=2 got={'order': 536870912, 'secret': 'none'} want={'order': 536870912, 'secret': 79717620} q=12918 err=
+FAIL tiny_1000003 seed=1 got={'order': 2048006144, 'secret': 'none'} want={'order': 1000003, 'secret': 406859} q=36704 err=
+FAIL tiny_1000003 seed=4 got={'order': 1000003, 'secret': 'none'} want={'order': 1000003, 'secret': 572600} q=12176 err=
+FAIL tiny_1000003 seed=11 got={'order': 1000003, 'secret': 'none'} want={'order': 1000003, 'secret': 781190} q=12016 err=
+FAIL tiny_7 seed=1 got={'order': 917504, 'secret': 262144} want={'order': 7, 'secret': 1} q=75294 err=
+FAIL tiny_7 seed=11 got={'order': 7, 'secret': 'none'} want={'order': 7, 'secret': 3} q=11614 err=
+FAIL tiny_7 seed=13 got={'order': 7, 'secret': 'none'} want={'order': 7, 'secret': 3} q=11070 err=
+FAIL tiny_7 seed=17 got={'order': 7, 'secret': 'none'} want={'order': 7, 'secret': 1} q=53858 err=
+FAIL tiny_64 seed=11 got={'order': 64, 'secret': 'none'} want={'order': 64, 'secret': 32} q=11284 err=
+FAIL tiny_64 seed=18 got={'order': 64, 'secret': 'none'} want={'order': 64, 'secret': 56} q=11204 err=
+FAIL tiny_1001 seed=5 got={'order': 11, 'secret': 'none'} want={'order': 11, 'secret': 6} q=11232 err=
+FAIL tiny_1001 seed=13 got={'order': 1001, 'secret': 'none'} want={'order': 1001, 'secret': 897} q=11744 err=
+FAIL tiny_1001 seed=14 got={'order': 1001, 'secret': 'none'} want={'order': 1001, 'secret': 388} q=12128 err=
+FAIL tiny_1001 seed=19 got={'order': 13, 'secret': 'none'} want={'order': 13, 'secret': 5} q=11536 err=
+FAIL tiny_65537 seed=4 got={'order': 65537, 'secret': 'none'} want={'order': 65537, 'secret': 24174} q=12176 err=
+FAIL tiny_65537 seed=18 got={'order': 65537, 'secret': 'none'} want={'order': 65537, 'secret': 23851} q=11728 err=
+FAIL forged1_C seed=6 got={'order': 1, 'secret': 0} want={'order': 12582912000, 'secret': 'none'} q=17080 err=
+FAIL forged1_C seed=14 got={'order': 1, 'secret': 0} want={'order': 12582912000, 'secret': 'none'} q=17176 err=
+FAIL forged1_C seed=17 got={'order': 1, 'secret': 'none'} want={'order': 1415577600, 'secret': 'none'} q=75160 err=
+FAIL public2_shape seed=0 got={'order': 74398574250, 'secret': 'none'} want={'order': 74398574250, 'secret': 12052421640} q=15194 err=
+FAIL public2_shape seed=4 got={'order': 14879714850, 'secret': 'none'} want={'order': 14879714850, 'secret': 11674257840} q=14830 err=
+FAIL public2_shape seed=19 got={'order': 74398574250, 'secret': 'none'} want={'order': 74398574250, 'secret': 38385554944} q=15066 err=
+FAIL public2_shape_forgA seed=4 got={'order': 1, 'secret': 0} want={'order': 14879714850, 'secret': 'none'} q=17352 err=
+FAIL public2_shape_forgA seed=6 got= want= q=-1 err=harness timeout
+FAIL public2_shape_forgA seed=10 got={'order': 2, 'secret': 0} want={'order': 2975942970, 'secret': 'none'} q=21982 err=
+FAIL public2_shape_forgA seed=13 got={'order': 1, 'secret': 0} want={'order': 14879714850, 'secret': 'none'} q=18728 err=
+FAIL skew_2^55_a2b3c5 seed=0 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=12544 err=
+FAIL skew_2^55_a2b3c5 seed=1 got={'order': 1, 'secret': 'none'} want={'order': 9007199254740992, 'secret': 30} q=73592 err=
+FAIL skew_2^55_a2b3c5 seed=2 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=3 got={'order': 1, 'secret': 'none'} want={'order': 18014398509481984, 'secret': 30} q=74944 err=
+FAIL skew_2^55_a2b3c5 seed=4 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=5 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=6 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=7 got={'order': 1, 'secret': 'none'} want={'order': 36028797018963968, 'secret': 30} q=75312 err=
+FAIL skew_2^55_a2b3c5 seed=8 got={'order': 1, 'secret': 'none'} want={'order': 36028797018963968, 'secret': 30} q=75264 err=
+FAIL skew_2^55_a2b3c5 seed=9 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=10 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=12880 err=
+FAIL skew_2^55_a2b3c5 seed=11 got={'order': 276927398, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=17600 err=
+FAIL skew_2^55_a2b3c5 seed=12 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=13 got={'order': 1, 'secret': 'none'} want={'order': 36028797018963968, 'secret': 30} q=73560 err=
+FAIL skew_2^55_a2b3c5 seed=14 got={'order': 253414154, 'secret': 30} want={'order': 18014398509481984, 'secret': 30} q=18398 err=
+FAIL skew_2^55_a2b3c5 seed=15 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=16 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=12592 err=
+FAIL skew_2^55_a2b3c5 seed=17 got= want= q=-1 err=harness timeout
+FAIL skew_2^55_a2b3c5 seed=18 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=12672 err=
+FAIL skew_2^55_a2b3c5 seed=19 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=0 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=1 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=2 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=3 got={'order': 23931643, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=26312 err=
+FAIL skew_2^58_a1b1c1 seed=4 got={'order': 936227703, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=27070 err=
+FAIL skew_2^58_a1b1c1 seed=5 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=6 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=7 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=8 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=9 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=10 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=11 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=12 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=13 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=14 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=15 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=16 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=17 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=18 got= want= q=-1 err=harness timeout
+FAIL skew_2^58_a1b1c1 seed=19 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=0 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=1 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=2 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=3 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=4 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=5 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=6 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=7 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=8 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=9 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=10 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=11 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=12 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=13 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=14 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=15 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=16 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=17 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=18 got= want= q=-1 err=harness timeout
+FAIL skew_p1e9sq_small seed=19 got= want= q=-1 err=harness timeout

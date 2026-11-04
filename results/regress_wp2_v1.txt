@@ -1,0 +1,83 @@
+solver=C:\Users\pulki\Downloads\Qiskit\qff-hackathon\submission\my_solver.py seeds=0..19 noise=0.002
+shape                    n  ok      wilson95 ordOK falseF missF exc    medQ    maxQ   maxT
+cyclic_2^58             20  20 [0.839,1.000]    20      0     0   0   14816   20048    2.4 FAIL
+p1e9_x_p1e9             20  20 [0.839,1.000]    20      0     0   0   15152   17846    1.9 FAIL
+2^20x6x3^8              20  20 [0.839,1.000]    20      0     0   0   12864   18270    1.8 FAIL
+cyclic_2^55             20  20 [0.839,1.000]    20      0     0   0   14540   23906    2.0 FAIL
+2^29_sq                 20  20 [0.839,1.000]    20      0     0   0   12582   35552    2.3 FAIL
+tiny_1000003            20  20 [0.839,1.000]    20      0     0   0   11852   19006    1.4 FAIL
+2^30x3^18               20  20 [0.839,1.000]    20      0     0   0   14955   33532    5.9 FAIL
+tiny_7                  20  20 [0.839,1.000]    20      0     0   0   10875   15072    1.4 FAIL
+tiny_64                 20  20 [0.839,1.000]    20      0     0   0   11010   20400    1.7 FAIL
+tiny_1001               20  20 [0.839,1.000]    20      0     0   0   11284   18170    1.7 FAIL
+tiny_65537              20  20 [0.839,1.000]    20      0     0   0   11611   17908    1.4 FAIL
+forged1_C               20  20 [0.839,1.000]    20      0     0   0   23127   61126   25.4 FAIL
+forged2_AB              20  20 [0.839,1.000]    20      0     0   0   22775   30658   16.1 FAIL
+forged3_ABC             20  20 [0.839,1.000]    20      0     0   0   21113   28802   18.4 FAIL
+forged_small_12x6       20  20 [0.839,1.000]    20      0     0   0   16305   27002    2.5 FAIL
+public1_shape           20  20 [0.839,1.000]    20      0     0   0   15540   20684    3.5 FAIL
+public2_shape           20  20 [0.839,1.000]    20      0     0   0   13713   35028    1.9 FAIL
+public2_shape_forgA     20  20 [0.839,1.000]    20      0     0   0   34744   64562   22.6 FAIL
+skew_2^55_a2b3c5        20   0 [0.000,0.161]     0      0     0   0   68386   73222   22.2 FAIL
+skew_2^58_a1b1c1        20   0 [0.000,0.161]     0      0     0   0   64692   73864   16.8 FAIL
+skew_p1e9sq_small       20   0 [0.000,0.161]     0      0     0   0   66660   71464   22.3 FAIL
+FAIL skew_2^55_a2b3c5 seed=0 got={'order': 33203083298, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=71248 err=
+FAIL skew_2^55_a2b3c5 seed=1 got={'order': 1120136712, 'secret': 30} want={'order': 9007199254740992, 'secret': 30} q=72976 err=
+FAIL skew_2^55_a2b3c5 seed=2 got={'order': 2778268745, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=67992 err=
+FAIL skew_2^55_a2b3c5 seed=3 got={'order': 120919420, 'secret': 30} want={'order': 18014398509481984, 'secret': 30} q=68070 err=
+FAIL skew_2^55_a2b3c5 seed=4 got={'order': 2281242044, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=71776 err=
+FAIL skew_2^55_a2b3c5 seed=5 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=62280 err=
+FAIL skew_2^55_a2b3c5 seed=6 got={'order': 1, 'secret': 0} want={'order': 18014398509481984, 'secret': 30} q=62280 err=
+FAIL skew_2^55_a2b3c5 seed=7 got={'order': 15053078, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=69458 err=
+FAIL skew_2^55_a2b3c5 seed=8 got={'order': 79127700, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=67306 err=
+FAIL skew_2^55_a2b3c5 seed=9 got={'order': 9425580389, 'secret': 30} want={'order': 2251799813685248, 'secret': 30} q=73222 err=
+FAIL skew_2^55_a2b3c5 seed=10 got={'order': 102463756487, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=64026 err=
+FAIL skew_2^55_a2b3c5 seed=11 got={'order': 51288614, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=68702 err=
+FAIL skew_2^55_a2b3c5 seed=12 got={'order': 55330925768, 'secret': 30} want={'order': 18014398509481984, 'secret': 30} q=72190 err=
+FAIL skew_2^55_a2b3c5 seed=13 got={'order': 202566455, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=70138 err=
+FAIL skew_2^55_a2b3c5 seed=14 got={'order': 432007152, 'secret': 30} want={'order': 18014398509481984, 'secret': 30} q=69072 err=
+FAIL skew_2^55_a2b3c5 seed=15 got={'order': 509639472, 'secret': 30} want={'order': 9007199254740992, 'secret': 30} q=69594 err=
+FAIL skew_2^55_a2b3c5 seed=16 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=62280 err=
+FAIL skew_2^55_a2b3c5 seed=17 got={'order': 8500009738, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=67390 err=
+FAIL skew_2^55_a2b3c5 seed=18 got={'order': 1, 'secret': 0} want={'order': 36028797018963968, 'secret': 30} q=62280 err=
+FAIL skew_2^55_a2b3c5 seed=19 got={'order': 95244548240, 'secret': 30} want={'order': 36028797018963968, 'secret': 30} q=65688 err=
+FAIL skew_2^58_a1b1c1 seed=0 got={'order': 300249751, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=64464 err=
+FAIL skew_2^58_a1b1c1 seed=1 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=2 got={'order': 776120588, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=68460 err=
+FAIL skew_2^58_a1b1c1 seed=3 got={'order': 46871288, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=71444 err=
+FAIL skew_2^58_a1b1c1 seed=4 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=5 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=6 got={'order': 228424194, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=66908 err=
+FAIL skew_2^58_a1b1c1 seed=7 got={'order': 67546710, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=69992 err=
+FAIL skew_2^58_a1b1c1 seed=8 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=9 got={'order': 154222776320, 'secret': 73120271391} want={'order': 288230376151711717, 'secret': 1} q=68080 err=
+FAIL skew_2^58_a1b1c1 seed=10 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=11 got={'order': 244303413, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=69492 err=
+FAIL skew_2^58_a1b1c1 seed=12 got={'order': 13080671285, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=73864 err=
+FAIL skew_2^58_a1b1c1 seed=13 got={'order': 14748230, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=66888 err=
+FAIL skew_2^58_a1b1c1 seed=14 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=15 got={'order': 6495347, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=67512 err=
+FAIL skew_2^58_a1b1c1 seed=16 got={'order': 40527387909, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=64920 err=
+FAIL skew_2^58_a1b1c1 seed=17 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_2^58_a1b1c1 seed=18 got={'order': 45911858338, 'secret': 1} want={'order': 288230376151711717, 'secret': 1} q=64020 err=
+FAIL skew_2^58_a1b1c1 seed=19 got={'order': 1, 'secret': 0} want={'order': 288230376151711717, 'secret': 1} q=62280 err=
+FAIL skew_p1e9sq_small seed=0 got={'order': 55868342946, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=64008 err=
+FAIL skew_p1e9sq_small seed=1 got={'order': 13952205255, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=66572 err=
+FAIL skew_p1e9sq_small seed=2 got={'order': 885358193, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=66922 err=
+FAIL skew_p1e9sq_small seed=3 got={'order': 889554558, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=70914 err=
+FAIL skew_p1e9sq_small seed=4 got={'order': 548073247, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=71114 err=
+FAIL skew_p1e9sq_small seed=5 got={'order': 2564097379, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=63162 err=
+FAIL skew_p1e9sq_small seed=6 got={'order': 21938183745, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=71374 err=
+FAIL skew_p1e9sq_small seed=7 got={'order': 2684052, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=64788 err=
+FAIL skew_p1e9sq_small seed=8 got={'order': 194238806140, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=64092 err=
+FAIL skew_p1e9sq_small seed=9 got={'order': 1089367232512, 'secret': 956919751837} want={'order': 1000000016000000063, 'secret': 231} q=66000 err=
+FAIL skew_p1e9sq_small seed=10 got={'order': 25526962176, 'secret': 24143421000} want={'order': 1000000016000000063, 'secret': 231} q=69808 err=
+FAIL skew_p1e9sq_small seed=11 got={'order': 18999195048, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=67906 err=
+FAIL skew_p1e9sq_small seed=12 got={'order': 57653541889, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=63270 err=
+FAIL skew_p1e9sq_small seed=13 got={'order': 71466297547, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=69722 err=
+FAIL skew_p1e9sq_small seed=14 got={'order': 14786824534, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=63912 err=
+FAIL skew_p1e9sq_small seed=15 got={'order': 1, 'secret': 0} want={'order': 1000000016000000063, 'secret': 231} q=62280 err=
+FAIL skew_p1e9sq_small seed=16 got={'order': 23346690160, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=71464 err=
+FAIL skew_p1e9sq_small seed=17 got={'order': 395244997, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=69910 err=
+FAIL skew_p1e9sq_small seed=18 got={'order': 274322614, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=66748 err=
+FAIL skew_p1e9sq_small seed=19 got={'order': 742198663, 'secret': 231} want={'order': 1000000016000000063, 'secret': 231} q=64866 err=

@@ -1,0 +1,6 @@
+solver=C:\Users\pulki\Downloads\Qiskit\qff-hackathon\submission\my_solver.py seeds=100..199 noise=0.002
+shape                    n  ok      wilson95 ordOK falseF missF exc    medQ    maxQ   maxT
+forged2_AB             100 100 [0.963,1.000]   100      0     0   0   23840   42080    6.3 PASS
+public2_shape_forgA    100  99 [0.946,0.998]   100      0     1   0   35686   79903    8.9 PASS
+forged1_C              100 100 [0.963,1.000]   100      0     0   0   23429   66789    8.3 PASS
+FAIL public2_shape_forgA seed=196 got={'order': 2975942970, 'secret': 0} want={'order': 2975942970, 'secret': 'none'} q=71440 err=
