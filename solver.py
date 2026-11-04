@@ -74,21 +74,30 @@ from silentgroup import oracle_gate
 
 MAX_ORDER = 1 << 60  # |G| <= 2^60, so ord(g) <= 2^60
 FEEDBACK_WINDOW = 12  # truncated correction costs < 2^-13 turns of phase error
-# Precision ladder.  A rung at b bits certifies orders up to 2^((b-24)/2), so
-# the cheap rungs finish small groups outright and cost less than one full
-# sweep between them; cascade risk grows as b^2, so they also fail far less.
-ORDER_LADDER = (64, 88, 112, 144, 144, 144, 144, 144)
+# 144 bits is a hard floor, not a tunable: a rung at b bits can only certify
+# orders up to 2^((b-24)/2), so anything shorter cannot represent an order near
+# 2^60 (measured: a 136-bit rung finds n = 2^59 in 4 runs out of 60).  One cheap
+# rung earns its place -- dropping it was measured over 510 runs and made things
+# worse, raising average queries by ~20% and roughly doubling the failure rate,
+# because most groups are finished by it outright.  RESERVE is then set so the
+# rung plus four full sweeps still fit.
+ORDER_LADDER = (88,) + (144,) * 6
 ORDER_SLACK = 8  # accept a convergent explaining theta to 2^-(bits-8):
 # a clean sweep clears that by ~256x, a cascaded one slips through at only 2^-16
-MULT_SEARCH = 48  # backstop: look for n = L*m with m this small
-LOG_SLACK = 12  # dlog precision past log2(n), giving the same kind of filter
-LOG_RESIDUAL = 0.01  # a clean dlog estimate lands this close to a multiple of 1/n
+MULT_SEARCH = 48  # last-resort blind search for a small missing factor
+ORDER_COMPLETIONS = 3  # scaled sweeps allowed to recover n/acc
+LOG_SLACK = 10  # dlog precision past log2(n), giving the same kind of filter
+LOG_RESIDUAL = 4 / 2**LOG_SLACK  # clean lands within 2^-LOG_SLACK; allow 4x
 LOG_SHOTS = 8
+COSET_LIMIT = 4  # enumerate an ambiguous coset only when it is at most this short
+CONFIRM_PER_SHOT = 2  # zero tests per element per shot; another pair beats guessing
 QUICK_SHOTS = 8  # stage 1 of the zero test: rejects a non-identity cheaply
 FULL_SHOTS = 12  # stage 2 tops it up to 20
 ZERO_ONES = 2  # accept "= e" only at <=2 ones in 20: false accept 2e-4, reject 2e-5
-RESERVE = 16000  # held back so a full dlog shot plus confirmations always fits
+RESERVE = 23000  # leaves the rung + 4 full sweeps room, and ~2 dlog shots after
 MIN_RESERVE = 3000  # minimising the order outranks the dlogs: a wrong order scores 0
+DLOG_RESERVE = 6000  # a dlog shot needs only its confirmations held back after it
+CONFIRM_RESERVE = 2500  # the confirmations themselves are the last thing to run
 
 DEBUG = False
 
@@ -208,11 +217,13 @@ def _is_identity(oracle, word, reserve=0):
 # --------------------------------------------------------------------------- #
 # primitive 2: single-qubit iterative phase estimation
 # --------------------------------------------------------------------------- #
-def _ipe(oracle, names, bits, reserve=RESERVE):
+def _ipe(oracle, names, bits, reserve=RESERVE, scale=1):
     """Estimate chi(h) for each name, all under one character.
 
-    Returns one integer m per name with chi(h) ~ m / 2**bits, or None if the run
-    does not fit in the remaining budget.
+    Returns one integer m per name with chi(h^scale) ~ m / 2**bits, or None if
+    the run does not fit in the remaining budget.  ``scale`` estimates the phase
+    of h^scale without ever naming that element: oracle_gate(h, scale*k) kicks
+    back scale*k*chi(h), which is exactly h^scale raised to k.
     """
     qc = QuantumCircuit(1, bits * len(names))
     for slot, name in enumerate(names):
@@ -220,7 +231,7 @@ def _ipe(oracle, names, bits, reserve=RESERVE):
         for j in range(bits):
             qc.reset(0)
             qc.h(0)
-            qc.append(oracle_gate(name, 1 << (bits - 1 - j)), [0])
+            qc.append(oracle_gate(name, scale << (bits - 1 - j)), [0])
             for i in range(max(0, j - FEEDBACK_WINDOW), j):
                 with qc.if_test((qc.clbits[off + i], 1)):
                     qc.p(-2.0 * math.pi * 2.0 ** (i - j - 1), 0)
@@ -238,7 +249,7 @@ def _ipe(oracle, names, bits, reserve=RESERVE):
 # --------------------------------------------------------------------------- #
 # part 1: the order of g
 # --------------------------------------------------------------------------- #
-def _minimise(oracle, L, reserve=MIN_RESERVE):
+def _minimise(oracle, L, reserve=MIN_RESERVE, floor=2):
     """Given g^L = e, divide primes out of L to reach the true ord(g).
 
     Writing M = L/n, the test g^(L/p^f) = e holds exactly when p^f divides M, so
@@ -255,7 +266,15 @@ def _minimise(oracle, L, reserve=MIN_RESERVE):
         lo, hi = 0, high  # f = 0 holds by assumption
         while lo < hi:
             mid = (lo + hi + 1) // 2
-            if _is_identity(oracle, [("g", L // p**mid)], reserve):
+            step = L // p**mid
+            # Dividing is the destructive direction: one false acceptance here
+            # throws the order away for good (a prime L bisects down to testing
+            # g^1, and a single stray accept returned 1).  Rejections are safe
+            # and stay single, so only an acceptance pays for a second,
+            # independent confirmation -- free in the common case where L is
+            # already minimal and every test rejects.
+            if step >= floor and _is_identity(oracle, [("g", step)], reserve) \
+                    and _is_identity(oracle, [("g", step)], reserve):
                 lo = mid
             else:
                 hi = mid - 1
@@ -289,13 +308,44 @@ def _order(oracle):
             return _minimise(oracle, cand)
         acc = cand  # a proper divisor of n: fold in another sweep
 
-    # Backstop: acc divides n but no sweep completed it.  n = acc*m for some m
-    # whose prime factors we missed, and that m is small in practice.
+    return _complete(oracle, acc) if acc > 1 else 1
+
+
+def _complete(oracle, acc):
+    """acc divides n but no sweep closed the gap.  Find the missing factor.
+
+    Since acc divides n, the element g^acc has order exactly n/acc, so the
+    missing factor is itself an order and the same machinery finds it -- and
+    n/acc is small, which makes the sweep cheap.  g^acc is never named: feeding
+    the oracle powers acc*k kicks back acc*k*chi(g), the phase of g^acc at k.
+    This replaces a blind multiplier search, which needed ~41k queries to
+    bridge a gap of 147 and silently gave up at 48.
+    """
+    for _ in range(ORDER_COMPLETIONS):
+        span = MAX_ORDER // acc  # n = acc*m, and n <= 2^60
+        if span < 2:
+            break
+        bits = 2 * span.bit_length() + 24
+        got = _ipe(oracle, ["g"], bits, reserve=MIN_RESERVE, scale=acc)
+        if got is None:
+            break
+        theta = Fraction(got[0], 1 << bits)
+        approx = theta.limit_denominator(span)
+        if abs(theta - approx) > Fraction(1, 1 << (bits - ORDER_SLACK)):
+            _log(f"complete: scaled sweep rejected (cascaded)")
+            continue
+        cand = acc * approx.denominator
+        _log(f"complete: acc={acc} x {approx.denominator} -> {cand}")
+        if cand <= MAX_ORDER and _is_identity(oracle, [("g", cand)], MIN_RESERVE):
+            return _minimise(oracle, cand)
+        acc = min(cand, MAX_ORDER) if cand <= MAX_ORDER else acc
+
+    # Last resort: a short blind search for a small missing factor.
     for mult in range(2, MULT_SEARCH + 1):
         cand = acc * mult
         if cand > MAX_ORDER:
             break
-        if _is_identity(oracle, [("g", cand)], RESERVE // 2):
+        if _is_identity(oracle, [("g", cand)], MIN_RESERVE):
             return _minimise(oracle, cand)
     return max(acc, 1)
 
@@ -322,19 +372,50 @@ def _candidates(pairs, n):
     n there is at most one exponent below n in it, namely x0 itself.
     """
     out = []
-    subsets = [pairs]
-    if len(pairs) > 2:  # one corrupted pair should not veto the rest
-        subsets += [pairs[:i] + pairs[i + 1:] for i in range(len(pairs))]
-    for sub in subsets:
+    for sub in _subsets(pairs):
         joint = _congruences([(s, t, n) for s, t in sub])
-        if joint is not None and joint[1] >= n and joint[0] < n and joint[0] not in out:
-            out.append(joint[0])
+        if joint is None:
+            continue
+        x0, period = joint
+        # The solution set is x = x0 (mod period).  When period >= n that
+        # leaves a single exponent below n, but when it does not -- every
+        # sampled character sharing a factor with n, which for n a power of two
+        # happens half the time per character -- it leaves a short coset.  That
+        # coset is worth enumerating rather than discarding: with an exact test
+        # available, two candidates cost two cheap confirmations.
+        if period < 1:
+            continue
+        count = (n - x0 + period - 1) // period if x0 < n else 0
+        # A coset longer than this is not worth guessing through: one more
+        # character shrinks it geometrically and costs less than the wasted
+        # confirmations would.
+        if not 0 < count <= COSET_LIMIT:
+            continue
+        for k in range(count):
+            a = x0 + k * period
+            if a < n and a not in out:
+                out.append(a)
     for s, t in reversed(pairs):  # newest character first
         if math.gcd(s, n) == 1:
             a = t * pow(s, -1, n) % n
             if a not in out:
                 out.append(a)
     return out
+
+
+def _subsets(pairs):
+    """The full pair set first, then each all-but-one subset."""
+    if len(pairs) > 2:  # one corrupted pair should not veto the rest
+        return [pairs] + [pairs[:i] + pairs[i + 1:] for i in range(len(pairs))]
+    return [pairs]
+
+
+def _consistent(pairs, n):
+    """True if some subset of >=2 characters admits a common exponent."""
+    return any(
+        len(sub) >= 2 and _congruences([(s, t, n) for s, t in sub]) is not None
+        for sub in _subsets(pairs)
+    )
 
 
 def _dlogs(oracle, n):
@@ -349,7 +430,7 @@ def _dlogs(oracle, n):
         todo = [k for k in names if found[k] is None]
         if not todo:
             break
-        m = _ipe(oracle, ["g"] + todo, bits, reserve=RESERVE // 2)
+        m = _ipe(oracle, ["g"] + todo, bits, reserve=DLOG_RESERVE)
         if m is None:
             break
         s, res = _split(m[0], bits, n)
@@ -365,27 +446,34 @@ def _dlogs(oracle, n):
             # multiple of 1/n -- and the latter happens only when X^n != e.
             # The exact test tells the two apart; guessing conflates a 9%
             # cascade rate with a forgery.
-            if not _is_identity(oracle, [(name, n)], RESERVE // 4):
+            if not _is_identity(oracle, [(name, n)], CONFIRM_RESERVE):
                 _log(f"dlog shot {shot}: {name}^n != e, so {name} is not in <g>")
                 return found, True
             _log(f"dlog shot {shot}: {name} cascaded, discarding")
 
         for name in todo:
-            budget_tests = 2  # cap confirmations per shot
+            budget_tests = CONFIRM_PER_SHOT
             for a in _candidates(pairs[name], n):
                 if a in tried[name] or budget_tests == 0:
                     continue
                 tried[name].add(a)
                 budget_tests -= 1
-                if _is_identity(oracle, [(name, 1), ("g", -a)], RESERVE // 4):
+                if _is_identity(oracle, [(name, 1), ("g", -a)], CONFIRM_RESERVE):
                     found[name] = a
                     break
             _log(f"dlog shot {shot}: {name} found={found[name]} "
                  f"pairs={len(pairs[name])} tried={len(tried[name])}")
-            # A genuine power of g confirms on the first candidate a clean
-            # character offers.  Two independent characters that each yield a
-            # candidate the zero test refuses means X is not in <g>.
-            if found[name] is None and len(pairs[name]) >= 3 and len(tried[name]) >= 2:
+            if found[name] is not None:
+                continue
+            # Forgery, decided on algebra rather than on failed confirmations:
+            # a genuine power of g satisfies a*s = t (mod n) under every
+            # character at once, so if no subset of two or more characters
+            # admits a common exponent, X is not in <g>.  Subsets keep one
+            # corrupted pair from framing an honest broadcast.
+            if len(pairs[name]) >= 3 and not _consistent(pairs[name], n):
+                _log(f"dlog shot {shot}: {name} has no common exponent")
+                return found, True
+            if len(pairs[name]) >= 3 and len(tried[name]) >= COSET_LIMIT + 1:
                 return found, True
     return found, any(v is None for v in found.values())
 
