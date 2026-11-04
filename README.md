@@ -62,6 +62,10 @@ The final solver has SHA256
 
 ## Guide for reviewers
 
+- [Development walkthrough and presentation guide](docs/PRESENTATION_WALKTHROUGH.md),
+  with the problem, original approaches, failure timeline, final design, and the
+  logic behind every test. A [formatted reading copy](docs/PRESENTATION_WALKTHROUGH.html)
+  and detailed evidence catalogs are included.
 - [Algorithm and correctness arguments](docs/ALGORITHM.md), including the forgery
   witness and the one-qubit resource analysis.
 - [Reproduction instructions](docs/REPRODUCIBILITY.md), exact environment, and all
@@ -75,7 +79,7 @@ The final solver has SHA256
 my_solver.py               Standalone submission: solve(oracle)
 pyproject.toml             Local simulator and testing dependencies
 requirements-tested.txt    Exact package versions used in recorded validation
-docs/                      Algorithm, reproduction, and attribution
+docs/                      Algorithm, walkthrough, test reasoning, and reproduction
 silentgroup/               Unmodified organizer simulator and public instances
 scripts/                   Reproducible benchmark and regression harnesses
 tests/                     Unit tests and failure-mode regressions
