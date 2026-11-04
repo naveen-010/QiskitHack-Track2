@@ -1,4 +1,4 @@
-solver=C:\Users\pulki\Downloads\Qiskit\qff-hackathon\submission\my_solver.py seeds=0..39 noise=0.002
+solver=my_solver.py seeds=0..39 noise=0.002
 shape                    n  ok      wilson95 ordOK falseF missF exc    medQ    maxQ   maxT
 cyclic_2^58             40  40 [0.912,1.000]    40      0     0   0   18338   20985    1.2 PASS
 p1e9_x_p1e9             40  40 [0.912,1.000]    40      0     0   0   18886   21702    1.4 PASS

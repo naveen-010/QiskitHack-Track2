@@ -1,3 +1,2 @@
-# Keep both standalone submission copies and their frozen hashes identical on every OS.
+# Keep the submission's frozen checksum stable across operating systems.
 /my_solver.py text eol=lf
-/submission/my_solver.py text eol=lf

@@ -1,8 +1,8 @@
 """Mock-group regression harness for the Silent Group solver.
 
-    python engineering/regress.py                          # submission/my_solver.py, 20 seeds
-    python engineering/regress.py --solver my_solver.py --seeds 30 --tag baseline
-    python engineering/regress.py --only tiny_1000003 --seeds 10
+    python scripts/regression.py                          # my_solver.py, 20 seeds
+    python scripts/regression.py --seeds 40 --tag combined_final_stress
+    python scripts/regression.py --only tiny_1000003 --seeds 10
 
 Uses answers ONLY here, outside the submission file. Every |G| <= 2^60.
 Writes results/regress_<tag>.csv (one row per run) and prints a summary table with
@@ -136,7 +136,7 @@ def summarise(rows, out=sys.stdout):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--solver", default=str(ROOT / "submission" / "my_solver.py"))
+    ap.add_argument("--solver", default=str(ROOT / "my_solver.py"))
     ap.add_argument("--seeds", type=int, default=20)
     ap.add_argument("--seed0", type=int, default=0)
     ap.add_argument("--only", nargs="*", help="shape names or group names (core, tiny)")

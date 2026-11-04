@@ -1,5 +1,5 @@
 {
-  "solver": "C:\\Users\\pulki\\Downloads\\Qiskit\\qff-hackathon\\submission\\my_solver.py",
+  "solver": "my_solver.py",
   "solver_sha256": "5d3635eb8439b62a07ef19d70eb1922976ee451e50f1b549570dc94d15c81e85",
   "offset": 10000,
   "seed0": 0,

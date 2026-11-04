@@ -8,8 +8,8 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-# SOLVER=path/to/file.py lets the same tests run against the baseline or the frozen file.
-SOLVER_PATH = Path(os.environ.get("SOLVER", ROOT / "submission" / "my_solver.py"))
+# SOLVER=path/to/file.py allows evaluation of another standalone solver.
+SOLVER_PATH = Path(os.environ.get("SOLVER", ROOT / "my_solver.py"))
 
 
 def load_solver(path=SOLVER_PATH):

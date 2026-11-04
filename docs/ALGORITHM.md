@@ -1,15 +1,6 @@
-# Combined Track 2 solver
+# Algorithm and correctness
 
-The standalone submission is `submission/my_solver.py`. The root `my_solver.py` is
-an identical copy, so the default README command also runs the current solver.
-Both use one recycled qubit and only the standard library, Qiskit, and
-`silentgroup.oracle_gate`. Neither reads files or inspects the hidden instance.
-The only oracle methods used are `run`, `cost`, and `budget_left`.
-
-Base: Pulkit's `submission/my_solver.py` at `a067e0ad3eec13904e92e784e5ff61580b4fdaa7`.
-Additional algorithmic ideas: Naveen's `solver.py` at
-`82e17e1be64df3d24956e60bc756f09f3f4da428`. Both original branches remain unchanged.
-The combined implementation is on the local branch `combined-solver`.
+The standalone implementation is [`my_solver.py`](../my_solver.py). It uses one recycled qubit and interacts with the device only through its public oracle interface.
 
 ## Algorithm
 
@@ -21,7 +12,7 @@ The combined implementation is on the local branch `combined-solver`.
 3. Minimize any verified order multiple. Test `n/p` first, because most proposed
    orders are already minimal. If a prime can be removed, use Naveen's prime-power
    bisection, accepting a reduction only after two independent confirmations.
-   Unlike the original main branch, minimization can reach 1.
+   Minimization includes order 1.
 4. For a known small order, use same-shot phase pairs and modular congruences to
    recover the logs. Verify each positive log against the device. Omit logs already
    solved from subsequent circuits. Treat insufficient samples/budget as unresolved.
@@ -97,70 +88,42 @@ The interface has no abstention sentinel. If every recovery route is exhausted,
 the solver preserves its best order information and returns integer secret 0 as
 an explicit best-effort guess. It does not label exhaustion as a forgery.
 
-The calibrated thresholds target the competition's stated noise. Historical
-noise-sweep figures in `results/` do not measure this new solver. Likewise,
-historical full-structure results belong to the previous version. The adapted
-`engineering/experiments.py e4` separately attempts full saturation after a fast
-forgery decision, and honestly reports unresolved structure if its budget or
-exhaustive-search limit prevents certification. Finding the key or a forgery does
-not by itself recover the entire subgroup structure.
+The calibrated thresholds target the competition's stated noise. Finding a key or
+proving a forgery does not necessarily recover the entire subgroup structure.
+Full-structure and elevated-noise experiments from earlier prototypes are not
+presented as results of this submission.
 
-## Measured results
+## Open extension: one-qubit implementation and resource analysis
 
-The final files have SHA256
-`5d3635eb8439b62a07ef19d70eb1922976ee451e50f1b549570dc94d15c81e85`.
+Every circuit uses one control qubit, recycled by measurement and reset. All
+same-character measurements remain within one circuit. This meets the device's
+16-qubit limit with a factor of sixteen fewer allocated control qubits.
 
-Same 184-case comparison, including failed runs in query/score averages:
+At least one control qubit is necessary in this oracle model: an oracle gate acts
+on a control qubit, so a zero-qubit circuit cannot query the device. Public costs
+and element names alone cannot distinguish arbitrary hidden group instances.
+Thus one is the minimum possible number of allocated control qubits for a general
+solver using this interface. This statement concerns the provided implicit-register
+model; it does not count or eliminate the physical group register.
 
-| Solver | Fully correct | Mean queries | Mean score / 1.5 |
-|---|---:|---:|---:|
-| Naveen original | 177/184 | 37,215 | 1.230510 |
-| Pulkit original final | 183/184 | 23,167 | 1.351402 |
-| Combined final | **184/184** | **20,236** | **1.373527** |
+For b phase bits on d named elements, the exact oracle cost per shot is
 
-Additional final-version validation:
+    d * sum(m for m in 1..b) = d*b*(b+1)/2.
 
-- Independent-seed suite: **328/328**, mean 19,548 queries, mean score 1.377824.
-- Original 21-shape, 40-seed regression: **840/840**, mean 19,489 queries.
-- Official unseeded checker: **40/40**.
-- Unit tests: **118 passed**, including the reproduced verification counterexamples.
-- Across these **1,392 solver runs**, the maximum cost was **71,094 queries** and
-  the maximum measured elapsed time was **8.991 seconds** under concurrent testing.
+The four-element 36-bit circuit therefore costs 2,664 queries per shot, compared
+with 10,440 for a single-element 144-bit circuit. The 12-stage feedback window uses
+at most `d * (12*b - 78)` conditional rotations when `b >= 12`. Feedback rotations
+do not add oracle queries. The circuit stores `d*b` classical bits.
 
-The combined solver is not cheaper on every individual shape. It pays for stronger
-order checks and positive-log audits on ordinary large honest instances, while its
-small-order handling and focused forgery witnesses improve the selected suite as
-a whole. Raw rows, per-case summaries, and exact provenance are in `results/`.
+For relation verification, the per-shot cost is
 
-## Reproduction
+    sum(max(1, bit_length(abs(x_i))) for nonzero x_i).
 
-Use the existing environment or install the package dependencies from
-`pyproject.toml`. No extra runtime dependency is needed by the submission.
+The calibrated sequential test stops once its fixed-sample decision is determined.
+The forgery witness checks p+1 lines in a two-dimensional slice instead of
+`(p**r - 1)/(p - 1)` lines in the entire rank-r torsion space. This reduction does
+not relax the slice's exhaustive injectivity check.
 
-```powershell
-# Official checker, OS-randomized measurements:
-.\.venv\Scripts\python.exe -m silentgroup.check submission/my_solver.py --repeat 20
-
-# Unit tests and regression counterexamples:
-.\.venv\Scripts\python.exe -m pytest tests -q
-
-# Same 184-case suite used to compare the original branches:
-.\.venv\Scripts\python.exe engineering/benchmark_combined.py --tag combined_final
-
-# Independent seeds, 328 runs:
-.\.venv\Scripts\python.exe engineering/benchmark_combined.py --tag combined_final_fresh --seed0 8 --seeds 16 --public-repeats 20 --offset 20000
-
-# Original 21-shape, 40-seed regression suite:
-.\.venv\Scripts\python.exe engineering/regress.py --seeds 40 --tag combined_final_stress --workers 4
-```
-
-The benchmark accepts `--solver path/to/other_solver.py` for a reference file. The
-original comparison rows are preserved in `results/benchmark_originals.csv`.
-Its historical label `large_prime_rank2` denotes the same Z_1009^4 construction
-now correctly labelled `prime_rank4_forgery`; use the explicit harness definition.
-Instance answers are used only by test and benchmark code, never by the solver.
-
-Final measured results and artifact hashes are recorded in
-`results/combined_validation.json` and `submission/SUBMISSION_CHECKLIST.md`.
-The selected case distribution is not the unknown judge distribution, and passing
-these experiments is not a guarantee of perfect hidden-instance performance.
+Total cost also depends on rejected candidates, repairs, and sampled characters;
+the solver checks the remaining budget before every run. Actual per-instance
+query counts are available in the [recorded results](../results/README.md).

@@ -1,7 +1,0 @@
-log2|H|= 20.0: b50=  17.3 pred=  21.0 plateau=0.958 [0.906,0.982] b95=20  q4(b50)=2534 q4(pred)=3696
-log2|H|=29.85: b50= 20.14 pred= 23.46 plateau=0.958 [0.906,0.982] b95=26  q4(b50)=3407 q4(pred)=4592
-log2|H|=39.88: b50= 23.07 pred= 25.97 plateau=0.858 [0.785,0.91] b95=32  q4(b50)=4441 q4(pred)=5603
-log2|H|= 50.0: b50=  28.0 pred=  28.5 plateau=0.8 [0.72,0.862] b95=not reached  q4(b50)=6496 q4(pred)=6726
-log2|H|=57.77: b50= 31.62 pred= 30.44 plateau=0.783 [0.701,0.848] b95=not reached  q4(b50)=8254 q4(pred)=7657
-fit b50 = 9.0 + 0.380 * log2|H|   (heuristic: 16 + 0.25 * log2|H|)
-[e1sum done in 0s]

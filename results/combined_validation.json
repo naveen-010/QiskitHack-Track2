@@ -2,8 +2,7 @@
   "branch": "combined-solver",
   "source_sha256": "5d3635eb8439b62a07ef19d70eb1922976ee451e50f1b549570dc94d15c81e85",
   "standalone_files": [
-    "my_solver.py",
-    "submission/my_solver.py"
+    "my_solver.py"
   ],
   "original_commits": {
     "naveen": "82e17e1be64df3d24956e60bc756f09f3f4da428",
@@ -82,5 +81,15 @@
     "Finite-shot statistical checks and phase reconstruction are probabilistic.",
     "The selected test cases do not represent the unknown hidden-instance distribution.",
     "Full subgroup structure may remain unresolved even when the key or forgery is established."
-  ]
+  ],
+  "submission_file": "my_solver.py",
+  "packaging_note": "Submission tree cleaned without changing solver bytes; duplicate-copy test replaced by frozen-checksum test.",
+  "packaging_validation": {
+    "unit_tests_passed": 118,
+    "official_checker_smoke": "6/6 correct",
+    "benchmark_smoke": "4/4 correct",
+    "regression_smoke": "40/40 correct",
+    "installation": "pip install -e .[test] succeeded",
+    "solver_bytes_unchanged": true
+  }
 }

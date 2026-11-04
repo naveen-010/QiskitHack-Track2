@@ -1,7 +1,0 @@
-{'noise': 0.002, 'builder': 'plain', 'queries_per_shot': 2664, 'corrupt_rate': 0.0333, 'corrupt_lo': 0.0182, 'corrupt_hi': 0.0603, 'recovery4': 0.825, 'rec_lo': 0.68, 'rec_hi': 0.913, 'recovery_per_10k_queries': 0.7742}
-{'noise': 0.002, 'builder': 'voted', 'queries_per_shot': 4184, 'corrupt_rate': 0.0033, 'corrupt_lo': 0.0006, 'corrupt_hi': 0.0186, 'recovery4': 0.85, 'rec_lo': 0.709, 'rec_hi': 0.929, 'recovery_per_10k_queries': 0.5079}
-{'noise': 0.008, 'builder': 'plain', 'queries_per_shot': 2664, 'corrupt_rate': 0.4633, 'corrupt_lo': 0.4077, 'corrupt_hi': 0.5199, 'recovery4': 0.0, 'rec_lo': 0.0, 'rec_hi': 0.088, 'recovery_per_10k_queries': 0.0}
-{'noise': 0.008, 'builder': 'voted', 'queries_per_shot': 4184, 'corrupt_rate': 0.1333, 'corrupt_lo': 0.0995, 'corrupt_hi': 0.1765, 'recovery4': 0.1, 'rec_lo': 0.04, 'rec_hi': 0.231, 'recovery_per_10k_queries': 0.0598}
-{'noise': 0.02, 'builder': 'plain', 'queries_per_shot': 2664, 'corrupt_rate': 0.9767, 'corrupt_lo': 0.9526, 'corrupt_hi': 0.9887, 'recovery4': 0.0, 'rec_lo': 0.0, 'rec_hi': 0.088, 'recovery_per_10k_queries': 0.0}
-{'noise': 0.02, 'builder': 'voted', 'queries_per_shot': 4184, 'corrupt_rate': 0.68, 'corrupt_lo': 0.6252, 'corrupt_hi': 0.7302, 'recovery4': 0.0, 'rec_lo': 0.0, 'rec_hi': 0.088, 'recovery_per_10k_queries': 0.0}
-[e3 done in 200s]

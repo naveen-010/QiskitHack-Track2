@@ -1,13 +1,16 @@
 """Regressions for the comparison failures and the combined solver's evidence handling."""
 import pytest
 from pathlib import Path
+import hashlib
+import json
 
 from silentgroup import MockGroup, Oracle, load_public
 
 
-def test_root_and_submission_are_identical():
+def test_submission_matches_frozen_validation_hash():
     root = Path(__file__).resolve().parents[1]
-    assert (root / "my_solver.py").read_bytes() == (root / "submission/my_solver.py").read_bytes()
+    validation = json.loads((root / "results/combined_validation.json").read_text())
+    assert hashlib.sha256((root / "my_solver.py").read_bytes()).hexdigest() == validation["source_sha256"]
 
 
 @pytest.mark.parametrize("forged", ["", "A"])

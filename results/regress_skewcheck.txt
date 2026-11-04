@@ -1,7 +1,0 @@
-solver=C:\Users\pulki\Downloads\Qiskit\qff-hackathon\submission\my_solver.py seeds=0..39 noise=0.002
-shape                    n  ok      wilson95 ordOK falseF missF exc    medQ    maxQ   maxT
-skew_2^55_a2b3c5        40  40 [0.912,1.000]    40      0     0   0   36567   64410    6.0 PASS
-skew_2^58_a1b1c1        40  40 [0.912,1.000]    40      0     0   0   33520   54291    3.7 PASS
-skew_p1e9sq_small       40  40 [0.912,1.000]    40      0     0   0   37206   70055    6.7 PASS
-public2_shape_forgA     40  40 [0.912,1.000]    40      0     0   0   38069   67810    7.0 PASS
-public2_shape           40  40 [0.912,1.000]    40      0     0   0   14416   39087    1.9 PASS

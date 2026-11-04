@@ -1,6 +1,6 @@
 """Seeded benchmark shared by the combined solver and any supplied reference file.
 
-python engineering/benchmark_combined.py --solver submission/my_solver.py --tag combined
+python scripts/benchmark.py --solver my_solver.py --tag combined_final
 Each solver uses the same instances, oracle seeds, noise, budget and scoring rule.
 The selected suite is not an estimate of the hidden judge's instance distribution.
 """
@@ -71,8 +71,8 @@ def run(task):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--solver", default=str(ROOT / "submission/my_solver.py"))
-    parser.add_argument("--tag", default="combined")
+    parser.add_argument("--solver", default=str(ROOT / "my_solver.py"))
+    parser.add_argument("--tag", default="combined_final")
     parser.add_argument("--seeds", type=int, default=8)
     parser.add_argument("--seed0", type=int, default=0)
     parser.add_argument("--public-repeats", type=int, default=20)
